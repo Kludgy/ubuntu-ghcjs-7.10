@@ -26,11 +26,10 @@ git clone https://github.com/ghcjs/ghcjs-prim.git
 git clone https://github.com/ghcjs/ghcjs.git
 
 # The numerous items below should be removed as updated packages become available on Hackage.
-sudo apt-get install -y mercurial git darcs
-cd ~
+sudo apt-get install -y mercurial #darcs
 git clone https://github.com/ekmett/lens/
 git clone https://github.com/haskell/haddock.git
-hg clone https://bitbucket.org/dafis/stringsearch
+hg clone https://bitbucket.org/ggreif/stringsearch -r ggreif/update-for-ghc-head-v79-1414682378929  #hg clone https://bitbucket.org/dafis/stringsearch
 git clone https://github.com/DanielSchuessler/th-expand-syns
 git clone https://github.com/luite/th-orphans
 git clone https://github.com/luite/haskell-src-meta
@@ -38,20 +37,19 @@ git clone https://github.com/Kludgy/tar-fork        #darcs get http://code.haske
 git clone https://github.com/Kludgy/polyparse-fork  #darcs get http://code.haskell.org/~malcolm/polyparse/
 git clone https://github.com/yesodweb/Shelly.hs
 cabal sandbox delete && cabal sandbox init
-cabal sandbox add-source ~/lens/
-cabal sandbox add-source ~/haddock/haddock-library/
-cabal sandbox add-source ~/haddock/haddock-api/
-cabal sandbox add-source ~/stringsearch/
-cabal sandbox add-source ~/th-expand-syns/
-cabal sandbox add-source ~/th-orphans/
-cabal sandbox add-source ~/haskell-src-meta/
-cabal sandbox add-source ~/tar-fork/
-cabal sandbox add-source ~/polyparse-fork/
-cabal sandbox add-source ~/Shelly.hs/
+cabal sandbox add-source $HOME/lens/
+cabal sandbox add-source $HOME/haddock/haddock-library/
+cabal sandbox add-source $HOME/haddock/haddock-api/
+cabal sandbox add-source $HOME/stringsearch/
+cabal sandbox add-source $HOME/th-expand-syns/
+cabal sandbox add-source $HOME/th-orphans/
+cabal sandbox add-source $HOME/haskell-src-meta/
+cabal sandbox add-source $HOME/tar-fork/
+cabal sandbox add-source $HOME/polyparse-fork/
+cabal sandbox add-source $HOME/Shelly.hs/
 
 cabal install ./ghcjs ./ghcjs-prim --allow-newer=base,deepseq,time,ghc,template-haskell,lens,haddock-library,haddock-api,stringsearch,th-expand-syns,th-orphans,haskell-src-meta,tar,polyparse,shelly
 
 ghcjs-boot --dev --ghcjs-boot-dev-branch ghc-7.10
 
 echo "Done."
-
