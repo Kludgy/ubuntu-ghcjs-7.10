@@ -1,0 +1,60 @@
+#!/bin/bash -e
+
+echo "Installing GHC environment..."
+sudo apt-get update -y
+sudo apt-get install -y python-software-properties git
+sudo add-apt-repository -y ppa:hvr/ghc
+sudo apt-get update -y
+sudo apt-get install -y cabal-install-1.22 ghc-7.10.1 happy-1.19.4 alex-3.1.3
+GHCPATH="$HOME/.cabal-sandbox/bin:$HOME/.cabal/bin:/opt/cabal/1.22/bin:/opt/ghc/7.10.1/bin:/opt/happy/1.19.4/bin:/opt/alex/3.1.3/bin"
+PATH=$PATH:$GHCPATH
+LC_ALL=en_US.utf8
+echo ""                            >> /home/vagrant/.bashrc
+echo "# GHC dev environment"       >> /home/vagrant/.bashrc
+echo "PATH=$PATH:$GHCPATH"         >> /home/vagrant/.bashrc
+echo "LC_ALL=en_US.utf8"           >> /home/vagrant/.bashrc
+echo ">>> Confirming that cabal output contains the new ghcjs features..."
+cabal install --help | grep ghcjs
+echo "<<<"
+
+echo "Installing node.js prerequisites for ghcjs..."
+sudo apt-get install -y make curl
+curl -sL https://deb.nodesource.com/setup | sudo bash -
+sudo apt-get install -y nodejs libtinfo-dev git libncurses5-dev autoconf
+cabal update
+
+echo "Bootstrapping ghcjs..."
+cd $HOME
+git clone https://github.com/ghcjs/ghcjs-prim.git
+git clone https://github.com/ghcjs/ghcjs.git
+
+# The numerous items below should be removed as updated packages become available on Hackage.
+sudo apt-get install -y mercurial git darcs
+cd ~
+git clone https://github.com/ekmett/lens/
+git clone https://github.com/haskell/haddock.git
+hg clone https://bitbucket.org/dafis/stringsearch
+git clone https://github.com/DanielSchuessler/th-expand-syns
+git clone https://github.com/luite/th-orphans
+git clone https://github.com/luite/haskell-src-meta
+git clone https://github.com/Kludgy/tar-fork        #darcs get http://code.haskell.org/tar/
+git clone https://github.com/Kludgy/polyparse-fork  #darcs get http://code.haskell.org/~malcolm/polyparse/
+git clone https://github.com/yesodweb/Shelly.hs
+cabal sandbox delete && cabal sandbox init
+cabal sandbox add-source ~/lens/
+cabal sandbox add-source ~/haddock/haddock-library/
+cabal sandbox add-source ~/haddock/haddock-api/
+cabal sandbox add-source ~/stringsearch/
+cabal sandbox add-source ~/th-expand-syns/
+cabal sandbox add-source ~/th-orphans/
+cabal sandbox add-source ~/haskell-src-meta/
+cabal sandbox add-source ~/tar-fork/
+cabal sandbox add-source ~/polyparse-fork/
+cabal sandbox add-source ~/Shelly.hs/
+
+cabal install ./ghcjs ./ghcjs-prim --allow-newer=base,deepseq,time,ghc,template-haskell,lens,haddock-library,haddock-api,stringsearch,th-expand-syns,th-orphans,haskell-src-meta,tar,polyparse,shelly
+
+ghcjs-boot --dev --ghcjs-boot-dev-branch ghc-7.10
+
+echo "Done."
+
