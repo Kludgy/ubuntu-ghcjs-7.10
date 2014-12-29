@@ -13,9 +13,6 @@ echo ""                            >> /home/vagrant/.bashrc
 echo "# GHC dev environment"       >> /home/vagrant/.bashrc
 echo "PATH=$PATH:$GHCPATH"         >> /home/vagrant/.bashrc
 echo "LC_ALL=en_US.utf8"           >> /home/vagrant/.bashrc
-echo ">>> Confirming that cabal output contains the new ghcjs features..."
-cabal install --help | grep ghcjs
-echo "<<<"
 
 echo "Installing node.js prerequisites for ghcjs..."
 sudo apt-get install -y make curl
