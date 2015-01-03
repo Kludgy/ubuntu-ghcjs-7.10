@@ -27,7 +27,6 @@ git clone https://github.com/ghcjs/ghcjs.git
 
 # The numerous items below should be removed as updated packages become available on Hackage.
 sudo apt-get install -y mercurial #darcs
-git clone https://github.com/ekmett/lens/
 git clone https://github.com/haskell/haddock.git
 hg clone https://bitbucket.org/ggreif/stringsearch -r ggreif/update-for-ghc-head-v79-1414682378929  #hg clone https://bitbucket.org/dafis/stringsearch
 git clone https://github.com/DanielSchuessler/th-expand-syns
@@ -36,7 +35,6 @@ git clone https://github.com/luite/haskell-src-meta
 git clone https://github.com/Kludgy/tar-fork        #darcs get http://code.haskell.org/tar/
 git clone https://github.com/yesodweb/Shelly.hs
 cabal sandbox delete && cabal sandbox init
-cabal sandbox add-source $HOME/lens/
 cabal sandbox add-source $HOME/haddock/haddock-library/
 cabal sandbox add-source $HOME/haddock/haddock-api/
 cabal sandbox add-source $HOME/stringsearch/
