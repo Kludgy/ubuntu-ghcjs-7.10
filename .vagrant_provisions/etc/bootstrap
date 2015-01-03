@@ -34,7 +34,6 @@ git clone https://github.com/DanielSchuessler/th-expand-syns
 git clone https://github.com/luite/th-orphans
 git clone https://github.com/luite/haskell-src-meta
 git clone https://github.com/Kludgy/tar-fork        #darcs get http://code.haskell.org/tar/
-git clone https://github.com/Kludgy/polyparse-fork  #darcs get http://code.haskell.org/~malcolm/polyparse/
 git clone https://github.com/yesodweb/Shelly.hs
 cabal sandbox delete && cabal sandbox init
 cabal sandbox add-source $HOME/lens/
@@ -45,7 +44,6 @@ cabal sandbox add-source $HOME/th-expand-syns/
 cabal sandbox add-source $HOME/th-orphans/
 cabal sandbox add-source $HOME/haskell-src-meta/
 cabal sandbox add-source $HOME/tar-fork/
-cabal sandbox add-source $HOME/polyparse-fork/
 cabal sandbox add-source $HOME/Shelly.hs/
 
 cabal install ./ghcjs ./ghcjs-prim --allow-newer=base,deepseq,time,ghc,template-haskell,lens,haddock-library,haddock-api,stringsearch,th-expand-syns,th-orphans,haskell-src-meta,tar,polyparse,shelly
